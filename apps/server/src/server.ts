@@ -1,5 +1,6 @@
 import cors from 'cors'
 import express, { Request, Response } from 'express'
+import { Buffer } from 'buffer'
 import { spawn } from 'child_process'
 
 const app = express()
@@ -26,36 +27,46 @@ app.get('/run', async (req: Request, res: Response) => {
 
   const runningCommand = spawn(command, options)
 
-  console.log(`running PID ${runningCommand.pid}`)
+  console.log(`PID ${runningCommand.pid}`)
 
   runningCommand.stdout.setEncoding('utf8')
 
-  runningCommand.stdout.on('data', (stream: string) => {
-    console.log(`stdout: ${stream}`)
+  runningCommand.stdout.on('data', (stream: string | Buffer) => {
+    console.log('a', JSON.stringify(stream))
 
-    const eventId = new Date().getTime()
-    res.write(`id: ${eventId}\n`)
+    let out: string | Buffer = stream
+    const time = new Date().getTime()
+
+    if (Buffer.isBuffer(stream)) {
+      out = Buffer.from(stream).toString()
+    }
+
+    res.write(`id: ${time}\n`)
     res.write(`event: stdout\n`)
     res.write(
       `data: ${JSON.stringify({
         type: 'stdout',
-        out: stream,
-        time: eventId
+        out,
+        time
       })}\n\n`
     )
   })
 
-  runningCommand.stderr.on('data', (stream: string) => {
-    console.error(`stderr: ${stream}`)
+  runningCommand.stderr.on('data', (stream: string | Buffer) => {
+    let out: string | Buffer = stream
+    const time = new Date().getTime()
 
-    const eventId = new Date().getTime()
-    res.write(`id: ${eventId}\n`)
+    if (Buffer.isBuffer(stream)) {
+      out = Buffer.from(stream).toString()
+    }
+
+    res.write(`id: ${time}\n`)
     res.write(`event: stderr\n`)
     res.write(
       `data: ${JSON.stringify({
         type: 'stderr',
-        out: stream,
-        time: eventId
+        out,
+        time
       })}\n\n`
     )
   })

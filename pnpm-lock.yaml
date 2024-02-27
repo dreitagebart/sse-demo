@@ -29,6 +29,9 @@ importers:
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
+      chalk:
+        specifier: ^5.3.0
+        version: 5.3.0
       cors:
         specifier: ^2.8.5
         version: 2.8.5
@@ -54,6 +57,9 @@ importers:
       '@mantine/hooks':
         specifier: ^7.6.1
         version: 7.6.1(react@18.2.0)
+      dayjs:
+        specifier: ^1.11.10
+        version: 1.11.10
       next:
         specifier: ^14.0.4
         version: 14.0.4(react-dom@18.2.0)(react@18.2.0)
@@ -2068,6 +2074,11 @@ packages:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
     dev: true
+
+  /chalk@5.3.0:
+    resolution: {integrity: sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
+    dev: false
 
   /ci-info@3.9.0:
     resolution: {integrity: sha512-NIxF55hv4nSqQswkAeiOi1r83xy8JldOFDTWiug55KBu9Jnblncd2U6ViHmYgHf01TPZS77NJBhBMKdWj9HQMQ==}
