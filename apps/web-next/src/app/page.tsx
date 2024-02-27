@@ -11,7 +11,7 @@ import {
   TextInput
 } from '@mantine/core'
 import { NextPage } from 'next'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 
 let events: null | EventSource = null
 
